@@ -11,19 +11,4 @@
 
     <artifactId>kafka</artifactId>
 
-    <properties>
-        <kafka.version>2.3.0</kafka.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka_2.12</artifactId>
-            <version>${kafka.version}</version>
-        </dependency>
-
-
-    </dependencies>
-
-
 </project>
