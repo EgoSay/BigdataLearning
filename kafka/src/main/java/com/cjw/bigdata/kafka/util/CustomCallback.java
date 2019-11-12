@@ -3,14 +3,10 @@ package com.cjw.bigdata.kafka.util;
 import com.cjw.bigdata.kafka.common.MessageEntity;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFutureCallback;
-
-import java.text.SimpleDateFormat;
 
 /**
  * 自定义异步回调处理类
