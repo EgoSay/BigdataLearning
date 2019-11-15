@@ -3,6 +3,7 @@ package com.cjw.bigdata.kafka.config;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.cjw.bigdata.kafka.common.MessageEntity;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +15,6 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-
-import com.cjw.bigdata.kafka.common.MessageEntity;
 
 /**
  * @author Ego

@@ -1,5 +1,6 @@
 package com.cjw.bigdata.kafka.controller;
 
+import com.cjw.bigdata.kafka.common.ErrorCode;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import com.cjw.bigdata.kafka.common.ErrorCode;
 import com.cjw.bigdata.kafka.common.MessageEntity;
 import com.cjw.bigdata.kafka.common.Response;
 import com.cjw.bigdata.kafka.producer.ProducerExample1;
