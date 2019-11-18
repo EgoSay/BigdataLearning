@@ -34,14 +34,9 @@ public class ConsumerCommitSpecifiedOffset {
         return properties;
     }
 
-    public static void main(String[] args) {
-
-        // 定义存有希望提交的分区和偏移量的 map
-        Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+    static void commitSpecifiedOffset(KafkaConsumer<String, String> kafkaConsumer,
+                                      Map<TopicPartition, OffsetAndMetadata> currentOffsets) {
         int count = 0;
-
-        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
-        kafkaConsumer.subscribe(Collections.singleton(topic));
         try {
             while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(1000);
@@ -69,5 +64,14 @@ public class ConsumerCommitSpecifiedOffset {
             kafkaConsumer.close();
         }
 
+    }
+    public static void main(String[] args) {
+
+        // 定义存有希望提交的分区和偏移量的 map
+        Map<TopicPartition, OffsetAndMetadata> currentOffsets = new HashMap<>();
+        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
+        kafkaConsumer.subscribe(Collections.singleton(topic));
+
+        commitSpecifiedOffset(kafkaConsumer, currentOffsets);
     }
 }
