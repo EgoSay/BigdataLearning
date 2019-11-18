@@ -1,14 +1,17 @@
+package consumer;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.log4j.BasicConfigurator;
 import util.PropertiesUtil;
 
 import java.util.Collections;
 import java.util.Properties;
 
 /**
- * 自定义控制提交偏移量
+ * 主动提交偏移量
  * @author Ego
  * @version 1.0
  * @since 2019/11/15 5:01 下午
@@ -30,6 +33,8 @@ public class ConsumerCommitOffset {
     }
 
     public static void main(String[] args) {
+        // 添加这一行加载log4j打印日志
+        BasicConfigurator.configure();
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
         kafkaConsumer.subscribe(Collections.singleton(topic));
         try {
