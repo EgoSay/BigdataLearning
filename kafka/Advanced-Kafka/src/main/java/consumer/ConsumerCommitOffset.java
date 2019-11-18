@@ -32,11 +32,7 @@ public class ConsumerCommitOffset {
         return properties;
     }
 
-    public static void main(String[] args) {
-        // 添加这一行加载log4j打印日志
-        BasicConfigurator.configure();
-        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
-        kafkaConsumer.subscribe(Collections.singleton(topic));
+    static void commitOffset(KafkaConsumer<String, String> kafkaConsumer) {
         try {
             while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
@@ -47,20 +43,20 @@ public class ConsumerCommitOffset {
                             record.offset(),
                             record.value());
 
-                // 调用 commitAsync() 方法异步提交, 不保证消息可靠
-                kafkaConsumer.commitAsync();
+                    // 调用 commitAsync() 方法异步提交, 不保证消息可靠
+                    kafkaConsumer.commitAsync();
 
-                /**
-                 * commitAsync() 方法 还支持自定义回调处理
-                 * // kafkaConsumer.commitAsync(new OffsetCommitCallback(){
-                 * //     @Override
-                 * //     public void onComplete(Map<TopicPartition, OffsetAndMetadata> offsets, Exception e) {
-                 * //         if (e != null) {
-                 * //             log.error("Commit failed for offsets {}", offsets, e);
-                 * //         }
-                 * //     }
-                 * // });
-                 */
+                    /**
+                     * commitAsync() 方法 还支持自定义回调处理
+                     * // kafkaConsumer.commitAsync(new OffsetCommitCallback(){
+                     * //     @Override
+                     * //     public void onComplete(Map<TopicPartition, OffsetAndMetadata> offsets, Exception e) {
+                     * //         if (e != null) {
+                     * //             log.error("Commit failed for offsets {}", offsets, e);
+                     * //         }
+                     * //     }
+                     * // });
+                     */
 
                 });
             }
@@ -77,5 +73,13 @@ public class ConsumerCommitOffset {
 
         }
 
+    }
+
+    public static void main(String[] args) {
+        // 添加这一行加载log4j打印日志
+        BasicConfigurator.configure();
+        KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
+        kafkaConsumer.subscribe(Collections.singleton(topic));
+        commitOffset(kafkaConsumer);
     }
 }
