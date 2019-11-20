@@ -17,7 +17,7 @@ public class PropertiesUtil {
 
     private static final String brokerList ="hadoop2:6667";
 
-    public  Properties initConsumerProperties() {
+    public Properties initConsumerProperties() {
         Properties properties = new Properties();
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -26,7 +26,7 @@ public class PropertiesUtil {
         return properties;
     }
 
-    public  Properties initProducerProperties() {
+    public Properties initProducerProperties() {
         Properties properties = new Properties();
         properties.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);

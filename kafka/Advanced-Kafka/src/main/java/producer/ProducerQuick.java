@@ -13,12 +13,11 @@ import java.util.Properties;
  * @since 2019/11/18 2:42 下午
  */
 public class ProducerQuick {
-    private static final String topic = "test2";
+    private static final String topic = "test3";
     private static Properties properties = new PropertiesUtil().initProducerProperties();
 
-    public static void main(String[] args) throws InterruptedException {
-        KafkaProducer<String, String> producer = new KafkaProducer<>(properties);
-        try {
+    public static void main(String[] args) {
+        try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
             for (int i = 0; i < 1000; i++) {
                 ProducerRecord<String, String> record = new ProducerRecord<>(topic, "Test" + i);
                 producer.send(record);
@@ -26,8 +25,6 @@ public class ProducerQuick {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            producer.close();
         }
 
     }
