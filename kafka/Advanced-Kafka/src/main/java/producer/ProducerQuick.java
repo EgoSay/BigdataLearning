@@ -1,5 +1,6 @@
 package producer;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import util.PropertiesUtil;
@@ -12,8 +13,9 @@ import java.util.Properties;
  * @version 1.0
  * @since 2019/11/18 2:42 下午
  */
+@Slf4j
 public class ProducerQuick {
-    private static final String topic = "test3";
+    private static final String topic = "transaction-test";
     private static Properties properties = new PropertiesUtil().initProducerProperties();
 
     public static void main(String[] args) {
@@ -21,6 +23,7 @@ public class ProducerQuick {
             for (int i = 0; i < 1000; i++) {
                 ProducerRecord<String, String> record = new ProducerRecord<>(topic, "Test" + i);
                 producer.send(record);
+                log.info("successfully send record: " + record);
                 Thread.sleep(10);
             }
         } catch (Exception e) {
