@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt
+FROM hseeberger/scala-sbt:8u222_1.3.4_2.13.1
 
 MAINTAINER Clement Laforet <sheepkiller@cultdeadsheep.org>
 
