@@ -1,6 +1,9 @@
 package transaction;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,8 +17,10 @@ import java.util.stream.Stream;
  * @version 1.0
  * @since 2019/11/27 18:48
  */
+@Slf4j
 public class OffsetManagerWithFileStore {
 
+    private static final String directory = "./kafka/Advanced-Kafka/src/main/resources/offset-file";
     private String storagePrefix;
 
 
@@ -39,7 +44,7 @@ public class OffsetManagerWithFileStore {
             bufferedWriter.close();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("文件" + storageName(topic, partition) + "不存在， 自动创建");
             throw new RuntimeException();
         }
     }
@@ -47,15 +52,19 @@ public class OffsetManagerWithFileStore {
     public long readOffsetFromExternalStore(String topic, int partition) {
         try {
             Stream<String> stream = Files.lines(Paths.get(storageName(topic, partition)));
-            return Long.parseLong(stream.collect(Collectors.toList()).get(0) + 1);
+            return Long.parseLong(stream.collect(Collectors.toList()).get(0)) + 1;
         } catch (IOException e) {
-            e.printStackTrace();
+            log.warn("文件" + storageName(topic, partition) + "不存在， 自动创建");
         }
         return 0;
 
     }
 
     private String storageName(String topic, int partition) {
-        return storagePrefix + "-" + topic + "-" + partition;
+        File file = new File(directory);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return directory + "/" + storagePrefix + "-" + topic + "-" + partition;
     }
 }

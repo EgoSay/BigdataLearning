@@ -22,7 +22,7 @@ public class ExactlyOnceDynamicConsumer {
 
     private static OffsetManagerWithFileStore offsetManagerWithFileStore = new OffsetManagerWithFileStore("fileStorage");
     private static final String topics = "transaction-test";
-    private static final String groupId = "transaction-test3";
+    private static final String groupId = "transaction-test4";
     private static Properties properties;
     private static final String out = "topic={} - partition={} - offset={} - value={}";
 
@@ -30,22 +30,39 @@ public class ExactlyOnceDynamicConsumer {
         PropertiesUtil propertiesUtil = new PropertiesUtil();
         properties = propertiesUtil.initConsumerProperties();
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+        // properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "none");
         return properties;
     }
 
     private static void processRecords(KafkaConsumer<String, String> consumer) {
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(100);
-            records.forEach(record -> {
-                log.info(out,
-                        record.topic(),
-                        record.partition(),
-                        record.offset(),
-                        record.value());
+        try {
+            while (true) {
+                ConsumerRecords<String, String> records = consumer.poll(100);
+                records.forEach(record -> {
+                    log.info(out,
+                            record.topic(),
+                            record.partition(),
+                            record.offset(),
+                            record.value());
 
-                offsetManagerWithFileStore.saveOffsetToExternalStore(record.topic(), record.partition(), record.offset());
-            });
+                    offsetManagerWithFileStore.saveOffsetToExternalStore(record.topic(), record.partition(), record.offset());
+                });
+                Thread.sleep(10000);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                // 使用commitSync() 方法同步提交, 将会提交由 poll() 返回的最新偏移量, 可以保证可靠性,
+                // 但因为提交时程序会处于阻塞状态，限制吞吐量
+                consumer.commitSync();
+            } finally {
+                consumer.close();
+            }
+
         }
+
     }
 
     public static void main(String[] args) {

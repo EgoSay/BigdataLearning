@@ -20,7 +20,7 @@ public class ProducerQuick {
 
     public static void main(String[] args) {
         try (KafkaProducer<String, String> producer = new KafkaProducer<>(properties)) {
-            for (int i = 0; i < 1000; i++) {
+            for (int i = 10000; ; i++) {
                 ProducerRecord<String, String> record = new ProducerRecord<>(topic, "Test" + i);
                 producer.send(record);
                 log.info("successfully send record: " + record);
