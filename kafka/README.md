@@ -1,4 +1,6 @@
 # Kafka学习
+
+## Introduction📖
 >Kafka 基础介绍见: [Kafka基础](https://cjwdream.top/2019/11/18/Kafka%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/)
 
 包含两个模块
@@ -13,11 +15,18 @@
     >4. 消息事务机制
     >....
 
+> 推荐利用 `docker` 安装 雅虎的开源工具 [kafka-manager](https://github.com/yahoo/kafka-manager) 便于监控 Kafka 状态, 简要流程见[主要问题及难点](#主要问题及难点)中说明
+
 ## 主要问题及难点  
+
 ### 基于 Ambari 部署的 Kafka 环境问题
 - 问题描述：在 SpringBoot-Kafka 项目中 生产者 一直写入不了数据
-- 原因：查询发现 Kafka 默认配置中 `offsets.topic.replication.factor = 3` 并且 `offsets.commit.required.acks = -1`, 代表需要消息写入三个副本才算成功，
+- 原因：查询发现 Kafka 默认配置中 `offsets.topic.replication.factor = 3` 并且 `offsets.commit.required.acks = -1`, 代表需要消息写入全部(三个)副本才算成功，
 而我只部署了一个 broker 节点 ，所以一直无法成功写入数据
+
+### docker 安装 雅虎的开源工具 kafka-manager
+`kafka-manager` 是雅虎开源的用于 监控 Kafka 的开源工具, 官方说明见[here](https://github.com/yahoo/kafka-manager)
+IDEA 中集成 Docker部署
 
 ### Kafka 偏移量机制
 - 见 [Kafka消息偏移量机制](https://cjwdream.top/2019/11/24/Kafka%E6%B6%88%E6%81%AF%E5%81%8F%E7%A7%BB%E9%87%8F%E6%9C%BA%E5%88%B6/)
