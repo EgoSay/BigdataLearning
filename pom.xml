@@ -11,6 +11,8 @@
     <modules>
         <module>hadoop-hdfs</module>
         <module>kafka</module>
+        <module>spark</module>
+        <module>flink</module>
     </modules>
 
     <parent>

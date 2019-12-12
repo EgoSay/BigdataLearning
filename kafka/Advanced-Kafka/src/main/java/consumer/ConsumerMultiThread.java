@@ -4,6 +4,7 @@ import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import util.PropertiesUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -22,13 +23,12 @@ public class ConsumerMultiThread extends Thread{
 
     private ExecutorService executorService;
     private int threadNum;
-
-    private static final String topic = "test2";
-    private static final String groupId = "test";
+    private  String topic;
+    private  String groupId;
     private static Properties properties;
     private static final String out = "topic={} - partition={} - offset={} - value={}";
 
-    public ConsumerMultiThread(Properties properties, String topic, int threadNum) {
+    public ConsumerMultiThread(String topic, int threadNum, String groupId) {
         this.executorService = new ThreadPoolExecutor(
                 threadNum,
                 threadNum,
@@ -38,9 +38,11 @@ public class ConsumerMultiThread extends Thread{
                 new ThreadPoolExecutor.CallerRunsPolicy());
 
         this.threadNum = threadNum;
+        this.topic = topic;
+        this.groupId = groupId;
     }
 
-    private static Properties initProperties() {
+    private Properties initProperties() {
         PropertiesUtil propertiesUtil = new PropertiesUtil();
         properties = propertiesUtil.initConsumerProperties();
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -50,7 +52,7 @@ public class ConsumerMultiThread extends Thread{
     @Override
     public void run() {
         KafkaConsumer<String, String> kafkaConsumer = new KafkaConsumer<>(initProperties());
-
+        kafkaConsumer.subscribe(Collections.singleton(topic));
         try {
             while (true) {
                 ConsumerRecords<String, String> records = kafkaConsumer.poll(100);
