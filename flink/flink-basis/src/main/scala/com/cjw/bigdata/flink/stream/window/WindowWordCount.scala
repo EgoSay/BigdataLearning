@@ -1,9 +1,10 @@
-package com.cjw.bigdata.flink.stream.wordcount
+package com.cjw.bigdata.flink.stream.window
 
+import com.cjw.bigdata.flink.stream.wordcount.GetStreamUtil
 import org.apache.flink.streaming.api.scala._
-import org.apache.flink.streaming.api.windowing.time.Time
 
 /**
+ * Count Window Example
  * Implements a windowed version of the streaming "SocketWordCount" program
  *
  * @author Ego
@@ -19,14 +20,15 @@ object WindowWordCount {
     val text = GetStreamUtil.getSocketTextStream(env)
 
 
-    val windowSize = 10
-    val slideSize = 5
+    val windowSize = 5
+    val slideSize = 3
 
     val windowWordCount = text
       .flatMap(_.toLowerCase().split(","))
       .filter(_.nonEmpty)
       .map((_, 1))
       .keyBy(0)
+      // countWindow 计数窗口，采用事件数量作为窗口处理依据，这里是滑动窗口，每 3 个事件计算最近 5 个事件消息
       .countWindow(windowSize, slideSize)
       .sum(1) // 将第2个元素即 count 值累加
 
