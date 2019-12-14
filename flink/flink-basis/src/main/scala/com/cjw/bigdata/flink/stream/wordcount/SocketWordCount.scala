@@ -1,7 +1,6 @@
-package com.cjw.bigdata.flink.streaming.wordcount
+package com.cjw.bigdata.flink.stream.wordcount
 
 import org.apache.flink.streaming.api.scala._
-import org.apache.flink.streaming.api.windowing.time.Time
 
 /**
  * @author Ego
@@ -23,8 +22,7 @@ object SocketWordCount {
       .filter(_.nonEmpty)
       .map((_, 1))
       .keyBy(0)
-      .timeWindow(Time.seconds(5))
-      .sum(1)
+      .sum(1) // 将第2个元素即 count 值累加
 
     wordCount.print().setParallelism(1)
 
