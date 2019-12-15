@@ -33,7 +33,9 @@ object SessionWindowing {
     val source = env.addSource(new SourceFunction[(String, Long, Int)] {
       override def run(sourceContext: SourceFunction.SourceContext[(String, Long, Int)]): Unit = {
         input.foreach(value => {
+          // 给数据打上时间戳
           sourceContext.collectWithTimestamp(value, value._2)
+          // 设置Watermark, 表示接下来不会再有时间戳小于等于这个数值记录
           sourceContext.emitWatermark(new Watermark(value._2 - 1))
         })
         sourceContext.emitWatermark(new Watermark(Long.MaxValue))
