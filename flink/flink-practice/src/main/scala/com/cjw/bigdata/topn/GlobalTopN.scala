@@ -26,7 +26,15 @@ object GlobalTopN {
     override def process(context: Context,
                          elements: Iterable[(String, Int)],
                          out: Collector[(String, Int)]): Unit = {
-      // TODO 利用 TreeMap构造自定义排序
+      // TODO 利用 TreeMap构造自定义排序 ? Ordering 用法需要再熟悉一下
+      //val treeMap = TreeMap[Int, (String, Int)]()(Ordering.by()
+      val treeMap = new TreeMap[Int, (String, Int)]
+      elements.foreach(ele => {
+        treeMap.insert(ele._2, ele)
+        if (treeMap.size > topSize) {
+
+        }
+      })
     }
   }
 }
