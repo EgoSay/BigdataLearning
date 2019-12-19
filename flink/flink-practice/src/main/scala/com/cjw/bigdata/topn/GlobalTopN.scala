@@ -30,11 +30,14 @@ object GlobalTopN {
       //val treeMap = TreeMap[Int, (String, Int)]()(Ordering.by()
       val treeMap = new TreeMap[Int, (String, Int)]
       elements.foreach(ele => {
-        treeMap.insert(ele._2, ele)
+        // 只保留 TopN元素
         if (treeMap.size > topSize) {
-
+          treeMap.drop(treeMap.size - topSize)
         }
       })
+      for(value <- treeMap.values) {
+        out.collect(value)
+      }
     }
   }
 }
