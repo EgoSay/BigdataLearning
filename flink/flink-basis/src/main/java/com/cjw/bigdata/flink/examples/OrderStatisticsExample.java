@@ -21,6 +21,8 @@ import java.util.Random;
  * @since JDK1.8
  */
 public class OrderStatisticsExample {
+
+    // 随机生成数据
     private static class DataSource extends RichParallelSourceFunction<Tuple2<String, Integer>> {
         private volatile boolean isRunning = true;
 
@@ -50,28 +52,30 @@ public class OrderStatisticsExample {
         DataStream<Tuple2<String, Integer>> ds = env.addSource(new DataSource());
         KeyedStream<Tuple2<String, Integer>, Tuple> keyedStream = ds.keyBy(0);
 
-        keyedStream.sum(1).keyBy(new KeySelector<Tuple2<String, Integer>, Object>() {
-            @Override
-            public Object getKey(Tuple2<String, Integer> stringIntegerTuple2) throws Exception {
-                return "";
-            }
-        }).fold(new HashMap<String, Integer>(), new FoldFunction<Tuple2<String, Integer>, HashMap<String, Integer>>() {
-            @Override
-            public HashMap<String, Integer> fold(HashMap<String, Integer> accumulator, Tuple2<String, Integer> value) throws Exception {
-                System.out.println("accumulator: " + accumulator);
-                System.out.println("Value: " + value);
-                accumulator.put(value.f0, value.f1);
-                return accumulator;
-            }
-        }).addSink(new SinkFunction<HashMap<String, Integer>>() {
-            @Override
-            public void invoke(HashMap<String, Integer> value, Context context) throws Exception {
-                // 每个类型的商品成交量
-                System.out.println("每个类型的商品成交量" + value);
-                // 商品成交总量
-                System.out.println("商品成交总量" + value.values().stream().mapToInt(v -> v).sum());
-            }
-        });
+        keyedStream
+                // 这一步统计各个商品的成交量
+                .sum(1)
+                // 将所有记录输出到同一个计算节点的实例上
+                .keyBy((KeySelector<Tuple2<String, Integer>, Object>) stringIntegerTuple2 -> "")
+                // 利用fold算子更新成交量值
+                .fold(new HashMap<String, Integer>(), new FoldFunction<Tuple2<String, Integer>, HashMap<String, Integer>>() {
+                    @Override
+                    public HashMap<String, Integer> fold(HashMap<String, Integer> accumulator, Tuple2<String, Integer> value) throws Exception {
+                        System.out.println("accumulator: " + accumulator);
+                        System.out.println("Value: " + value);
+                        accumulator.put(value.f0, value.f1);
+                        return accumulator;
+                    }
+                })
+                .addSink(new SinkFunction<HashMap<String, Integer>>() {
+                    @Override
+                    public void invoke(HashMap<String, Integer> value, Context context) throws Exception {
+                        // 每个类型的商品成交量
+                        System.out.println("每个类型的商品成交量" + value);
+                        // 商品成交总量
+                        System.out.println("商品成交总量" + value.values().stream().mapToInt(v -> v).sum());
+                    }
+                });
 
         env.execute();
     }
