@@ -1,0 +1,36 @@
+spring:
+  elasticsearch:
+    bboss:
+      elasticUser:
+      elasticPassword:
+      elasticsearch:
+        rest:
+          hostNames: 10.111.32.76:9200,10.111.32.78:9200,10.111.32.79:9200
+        dateFormat: yyyy-MM-dd
+        timeZone: Asia/Shanghai
+        ttl: 2d
+        showTemplate: true
+        discoverHost: true
+      dslfile:
+        refreshInterval: -1
+      http:
+        timeoutConnection: 400000
+        timeoutSocket: 400000
+        connectionRequestTimeout: 400000
+        retryTime: 1
+        maxLineLength: -1
+        maxHeaderCount: 200
+        maxTotal: 400
+        defaultMaxPerRoute: 200
+        soReuseAddress: false
+        soKeepAlive: false
+        timeToLive: 3600000
+        keepAlive: 3600000
+        keystore:
+        keyPassword:
+        hostnameVerifier:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+server:
+  port: 9001
