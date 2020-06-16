@@ -13,6 +13,8 @@
         <module>kafka</module>
         <module>spark</module>
         <module>flink</module>
+        <module>practices</module>
+        <module>elasticsearch</module>
     </modules>
 
     <parent>

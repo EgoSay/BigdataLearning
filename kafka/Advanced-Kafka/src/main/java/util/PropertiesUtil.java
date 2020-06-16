@@ -15,7 +15,7 @@ import java.util.Properties;
 
 public class PropertiesUtil {
 
-    private static final String brokerList ="hadoop2:6667";
+    private static final String brokerList ="hadoop1:6667";
 
     public Properties initConsumerProperties() {
         Properties properties = new Properties();
