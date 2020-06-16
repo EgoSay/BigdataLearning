@@ -14,6 +14,44 @@
     <modules>
         <module>spring-data-elasticsearch</module>
     </modules>
+    <properties>
+        <java.version>1.8</java.version>
+        <es.version>6.8.10</es.version>
+    </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>x-pack-sql-jdbc</artifactId>
+            <version>${es.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bbossgroups.plugins</groupId>
+            <artifactId>bboss-elasticsearch-rest-jdbc</artifactId>
+            <version>6.1.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bbossgroups.plugins</groupId>
+            <artifactId>bboss-elasticsearch-spring-boot-starter</artifactId>
+            <version>6.1.5</version>
+        </dependency>
+    </dependencies>
 
+    <repositories>
+        <repository>
+            <id>elastic.co</id>
+            <url>https://artifacts.elastic.co/maven</url>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>elastic.co</id>
+            <properties>
+                <maven.compiler.source>1.8</maven.compiler.source>
+                <maven.compiler.target>1.8</maven.compiler.target>
+                <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
 </project>
