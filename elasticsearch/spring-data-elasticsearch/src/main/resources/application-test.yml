@@ -1,4 +1,15 @@
+server:
+  port: 9001
+
+
 spring:
+  data:
+    elasticsearch:
+      cluster-nodes: localhost:9200 # 配置IP及端口号
+      cluster-name: elasticsearch
+      request-type: http
+
+  # bboss es配置
   elasticsearch:
     bboss:
       elasticUser:
@@ -32,5 +43,4 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-server:
-  port: 9001
+
