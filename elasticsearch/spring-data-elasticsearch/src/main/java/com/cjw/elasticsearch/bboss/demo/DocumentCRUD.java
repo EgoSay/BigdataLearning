@@ -66,7 +66,7 @@ public class DocumentCRUD {
 
     private User buildUser(Long id) {
         User user = new User();
-        user.setId(id);
+        user.setCid(id);
         user.setAge(id.intValue());
         user.setGender("female");
         user.setName("test"+id);
@@ -82,6 +82,9 @@ public class DocumentCRUD {
             String response = client.addDocument(indice, "demo", user,"refresh=true");
             log.debug(">>>>> Print the result：addDocument: {}", response);
         }
+        HashMap<String, String> map = new HashMap<>();
+        map.put("update", "updated");
+        client.updateDocument(indice, "demo", 2, map);
 
     }
 

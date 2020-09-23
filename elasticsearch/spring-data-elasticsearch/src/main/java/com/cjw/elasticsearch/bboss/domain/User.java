@@ -1,5 +1,6 @@
 package com.cjw.elasticsearch.bboss.domain;
 
+import com.frameworkset.orm.annotation.ESId;
 import lombok.Data;
 import org.frameworkset.elasticsearch.entity.ESBaseData;
 
@@ -17,7 +18,8 @@ public class User extends ESBaseData implements Serializable {
     /**
      * 主键
      */
-    private Long id;
+    @ESId
+    private Long cid;
 
     /**
      * 客户姓名
