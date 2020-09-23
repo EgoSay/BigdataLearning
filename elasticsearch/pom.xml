@@ -17,6 +17,7 @@
     <properties>
         <java.version>1.8</java.version>
         <es.version>6.8.10</es.version>
+        <hutool-version>4.5.7</hutool-version>
     </properties>
 
     <dependencies>
@@ -42,6 +43,13 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
+        </dependency>
+
+        <!-- hotool工具类库 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool-version}</version>
         </dependency>
     </dependencies>
 
