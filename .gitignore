@@ -31,3 +31,4 @@ hs_err_pid*
 *.cmd
 
 
+/kafka/advanced-kafka/src/main/resources/offset-file/

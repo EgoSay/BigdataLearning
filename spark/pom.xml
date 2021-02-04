@@ -13,6 +13,7 @@
 
     <modules>
         <module>sparkStreaming</module>
+        <module>spark-es</module>
     </modules>
 
     <dependencies>

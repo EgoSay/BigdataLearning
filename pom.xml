@@ -15,6 +15,7 @@
         <module>flink</module>
         <module>practices</module>
         <module>elasticsearch</module>
+        <module>spark-es</module>
     </modules>
 
     <parent>
