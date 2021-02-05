@@ -1,5 +1,6 @@
 package com.cjw.bigdata.spark.es;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
@@ -13,10 +14,12 @@ import scala.Tuple2;
 
 import java.util.Map;
 
-import static org.elasticsearch.spark.rdd.Metadata.*;
+import static org.elasticsearch.spark.rdd.Metadata.ID;
+import static org.elasticsearch.spark.rdd.Metadata.VERSION;
 
 /**
  * Spark读写es
+ * refer: https://www.elastic.co/guide/en/elasticsearch/hadoop/current/spark.html
  * @author Ego
  * @version 1.0
  * @date 2021/2/4 17:46
@@ -71,10 +74,21 @@ public class SparkEsOperation {
 
     public static void readData() {
         JavaSparkContext sc = new JavaSparkContext(getConf());
+
+        // read data
+        JavaPairRDD<String, Map<String, Object>> jsonRdd = JavaEsSpark.esRDD(sc, "json/_doc");
+        log.info(">>>>>>>>>>>>> read es data from json/_doc:{}", JSONObject.toJSONString(jsonRdd.values().collect()));
+
+        // with lambda operation
+        JavaRDD<Map<String, Object>> filter = jsonRdd.values().filter(doc -> doc.containsValue("zhangsan"));
+        log.info(">>>>>>>>>>>>> read es data from json/_doc with lambda operation :{}", JSONObject.toJSONString(filter.count()));
+
     }
 
     public static void main(String[] args) {
-        writeData();
+        // writeData();
+
+        readData();
     }
 
 
