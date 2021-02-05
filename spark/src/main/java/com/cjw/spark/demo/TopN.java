@@ -1,3 +1,5 @@
+package com.cjw.spark.demo;
+
 /**
  * @author Ego
  * @version 1.0

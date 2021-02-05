@@ -11,5 +11,15 @@
 
     <artifactId>spark-es</artifactId>
 
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.elasticsearch/elasticsearch-hadoop -->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-hadoop</artifactId>
+            <version>6.2.0</version>
+        </dependency>
+
+    </dependencies>
+
 
 </project>
