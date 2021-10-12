@@ -9,8 +9,8 @@ import org.apache.flink.streaming.api.windowing.time.Time
  * @version 1.0
  */
 object TimeWindowing {
-  val ip = "localhost"
-  val port = 9000
+  val ip = "10.110.30.3"
+  val port = 9999
 
   def main(args: Array[String]): Unit = {
 
